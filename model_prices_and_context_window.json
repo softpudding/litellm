@@ -36978,5 +36978,19 @@
         "supports_vision": true,
         "supports_web_search": true,
         "tpm": 8000000
+    },
+    "dashscope/qwen3.5-plus": {
+        "input_cost_per_token": 4e-07,
+        "litellm_provider": "dashscope",
+        "max_input_tokens": 991808,
+        "max_output_tokens": 65536,
+        "max_tokens": 65536,
+        "mode": "chat",
+        "output_cost_per_token": 1.2e-06,
+        "source": "https://www.alibabacloud.com/help/en/model-studio/models",
+        "supports_function_calling": true,
+        "supports_reasoning": true,
+        "supports_tool_choice": true,
+        "supports_vision": true
     }
 }
