@@ -9922,9 +9922,9 @@
     },
     "dashscope/qwen3.5-flash": {
         "litellm_provider": "dashscope",
-        "max_input_tokens": 1000000,
-        "max_output_tokens": 66000,
-        "max_tokens": 66000,
+        "max_input_tokens": 983616,
+        "max_output_tokens": 65536,
+        "max_tokens": 65536,
         "mode": "chat",
         "source": "https://www.alibabacloud.com/help/en/model-studio/models",
         "supports_function_calling": true,
