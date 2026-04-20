@@ -113,6 +113,40 @@ class TestDashScopeConfig:
         assert "```python" in response.choices[0].message.content
         assert "Hey from LiteLLM" in response.choices[0].message.content
 
+    def test_dashscope_preserves_cache_control_on_content_blocks(self):
+        """
+        DashScope's OpenAI-compatible endpoint natively accepts the
+        `cache_control: {"type": "ephemeral"}` marker to trigger explicit
+        context cache. The base OpenAI config strips it; DashScope must not.
+        """
+        config = DashScopeChatConfig()
+
+        messages: list[AllMessageValues] = [
+            {
+                "role": "system",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": "long reference document...",
+                        "cache_control": {"type": "ephemeral"},
+                    },
+                ],
+            },
+            {"role": "user", "content": "q"},
+        ]
+
+        body = config.transform_request(
+            model="qwen3.6-flash",
+            messages=messages,
+            optional_params={},
+            litellm_params={},
+            headers={},
+        )
+
+        out_system = body["messages"][0]["content"]
+        assert isinstance(out_system, list) and len(out_system) == 1
+        assert out_system[0].get("cache_control") == {"type": "ephemeral"}
+
     def test_dashscope_no_longer_transforms_content_list(self):
         """
         Test that DashScopeChatConfig does not transform content lists to strings.
